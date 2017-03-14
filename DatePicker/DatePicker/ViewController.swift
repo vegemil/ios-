@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     let timeSelector: Selector = #selector(ViewController.updateTime)
     let interval = 1.0
     var count = 0
+    var alarmTime = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,17 +34,32 @@ class ViewController: UIViewController {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss EEE"
-        lblSelectTime.text = "선택 시간 : " + formatter.string(from: datePickerView.date)
+        alarmTime = formatter.string(from: datePickerView.date)
+        lblSelectTime.text = "선택 시간 : " + alarmTime;
     }
 
     func updateTime(){
         //lblCurrentTime.text = String(count)
-        //count = count + 1
+        count += 1
         
         let date = NSDate()
         let formatter  = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss EEE"
-        lblCurrentTime.text = "현재시간 : " + formatter.string(from: date as Date)
+        
+        let currentTime = formatter.string(from: date as Date)
+        lblCurrentTime.text = "현재시간 : " + currentTime
+        
+        
+        if(alarmTime == currentTime)
+        {
+            view.backgroundColor = UIColor.red;
+            count = 0;
+        }
+        
+        if(count >= 60)
+        {
+            view.backgroundColor = UIColor.white;
+        }
     }
 }
 
