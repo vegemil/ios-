@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
     let PICKER_VIEW_COLUMN = 1
     var imageFileName = ["1.jpeg", "2.jpeg", "3.jpeg", "4.jpeg", "5.jpeg"]
     var imageArray = [UIImage?]()
+    let PICKER_VIEW_HEIGHT:CGFloat = 80
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,10 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return PICKER_VIEW_HEIGHT
+    }
 
     func numberOfComponentsInPickerView(pickerView : UIPickerView!) -> Int {
         return PICKER_VIEW_COLUMN
@@ -43,10 +48,17 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         return imageFileName.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return imageFileName[row]
-    }
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return imageFileName[row]
+//    }
 
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let imageView = UIImageView(image: imageArray[row])
+        imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 150)
+        
+        return imageView
+    }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         lblImageFileName.text = imageFileName[row]
         imageView.image = imageArray[row]
